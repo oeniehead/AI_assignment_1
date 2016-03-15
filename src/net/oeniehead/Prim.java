@@ -9,6 +9,7 @@ public class Prim {
 
     private Vertex root;
     private int edgeHits;
+    private long runTime;
 
     private PriorityQueue<Vertex> frontier;
 
@@ -19,9 +20,15 @@ public class Prim {
 
     public Graph solve()
     {
+        long startTime = System.currentTimeMillis();
+
         this.prepare();
         this.run();
         this.buildMST();
+
+        long endTime = System.currentTimeMillis();
+
+        this.runTime = (endTime - startTime);
 
         return this.mst;
     }
@@ -96,6 +103,12 @@ public class Prim {
     {
         return this.edgeHits;
     }
+    public int getExtraEdgeHits()
+    {
+        return this.edgeHits - this.subject.getVertices().size() + 1;
+    }
+
+    public long getRunTime() { return this.runTime; }
 
     public Graph getMST()
     {
