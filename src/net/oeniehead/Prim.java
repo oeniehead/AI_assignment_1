@@ -90,6 +90,7 @@ public class Prim {
                     other.setParent(current);
 
                     // Omdat de priorityqueue NIET reordered, voeg dit element opnieuw toe
+                    this.frontier.remove(other);
                     this.frontier.add(other);
                 }
             }
