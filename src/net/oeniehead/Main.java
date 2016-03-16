@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         //De graaf van de slides:
-        /*Graph graph = new Graph();
+        Graph graph = new Graph();
 
         Vertex a = new Vertex("A");
         Vertex b = new Vertex("B");
@@ -40,20 +40,21 @@ public class Main {
         graph.connect(g, f, 2);
         graph.connect(g, h, 1);
         graph.connect(g, i, 6);
-        graph.connect(h, i, 7);*/
+        graph.connect(h, i, 7);
 
 
         // Bouw een random graaf met 200 vertices die met 40% kans verbonden zijn:
-        Graph graph = new Graph();
-        graph.makeRandom(10, 0.0f);
+        /*Graph graph = new Graph();
+        graph.makeRandom(10, 0.0f);*/
 
-        System.out.println(graph.toString());
+        //System.out.println(graph.toString());
 
         // Los de graaf op:
         Prim p = new Prim(graph);
 
         System.out.println(p.solve().toString());
         System.out.println(p.getEdgeHits() + " edge considerations (" + p.getExtraEdgeHits() + " extra)");
+        System.out.println("Total weight: " + p.getTotalWeight());
         System.out.println("Done in " + p.getRunTime() + " ms");
     }
 }
