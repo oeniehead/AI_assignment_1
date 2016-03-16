@@ -10,6 +10,7 @@ public class Prim {
     private Vertex root;
     private int edgeHits;
     private long runTime;
+    private int totalWeight;
 
     private PriorityQueue<Vertex> frontier;
 
@@ -18,6 +19,10 @@ public class Prim {
         this.subject = subject;
     }
 
+    /**
+     * Voer Prim's algoritme uit
+     * @return
+     */
     public Graph solve()
     {
         long startTime = System.currentTimeMillis();
@@ -33,11 +38,15 @@ public class Prim {
         return this.mst;
     }
 
+    /**
+     * Prepareer de klasse voor uitvoer
+     */
     private void prepare()
     {
         this.mst = new Graph();
         this.frontier = new PriorityQueue<>(new VertexComparator());
         this.edgeHits = 0;
+        this.totalWeight = 0;
 
         for(Vertex vertex :this.subject.getVertices())
         {
@@ -54,68 +63,88 @@ public class Prim {
         this.root.setWeight(0);
     }
 
+    /**
+     * Voer Prim's algoritme uit
+     */
     private void run()
     {
         while(this.frontier.size() > 0)
         {
             Vertex current = this.frontier.poll();
 
+            // Skip vertices die al gedaan zijn
             if(current.isDone()) continue;
 
             current.setDone(true);
-
-            //System.out.println("Current: " + current.getLabel() + " " + current.getWeight());
 
             for(Edge edge : this.subject.getConnection(current))
             {
                 Vertex other = edge.other(current);
 
-                //System.out.println(" - connects: " + other.getLabel() + "  " + edge.getWeight());
-
                 int newWeight = edge.getWeight();
 
-                //System.out.println(" - weight: " + other.getWeight() + " new weight: " + newWeight);
-
                 if(other.getWeight() > newWeight && !other.isDone()) {
-                    //System.out.println(" - " + current.getLabel() + " is parent of " + other.getLabel() + " with weight " + newWeight);
-
                     this.edgeHits++;
 
                     other.setWeight(newWeight);
                     other.setParent(current);
+
+                    // Omdat de priorityqueue NIET reordered, voeg dit element opnieuw toe
                     this.frontier.add(other);
                 }
             }
         }
     }
 
+    /**
+     * Bouw een graaf op basis van de gevonden waarden
+     */
     private void buildMST()
     {
-        //int totalWeight = 0;
-
         for(Vertex vertex: this.subject.getVertices())
         {
             if(vertex.getParent() == null) continue;
 
-            //totalWeight += vertex.getWeight();
+            this.totalWeight += vertex.getWeight();
 
             this.mst.connect(vertex, vertex.getParent(), vertex.getWeight());
         }
-
-        //System.out.println("Total weight: " + totalWeight);
     }
 
+    /**
+     * Geef alle edge hits
+     * @return
+     */
     public int getEdgeHits()
     {
         return this.edgeHits;
     }
+
+    /**
+     * Geef alle niet-optimale edge hits
+     * @return
+     */
     public int getExtraEdgeHits()
     {
         return this.edgeHits - this.subject.getVertices().size() + 1;
     }
 
+    /**
+     * Geef de run-time
+     * @return
+     */
     public long getRunTime() { return this.runTime; }
 
+    /**
+     * Geef het totale gewicht van de gevonden boom
+     * @return
+     */
+    public int getTotalWeight() { return this.totalWeight; }
+
+    /**
+     * Geef de graaf
+     * @return
+     */
     public Graph getMST()
     {
         return this.mst;

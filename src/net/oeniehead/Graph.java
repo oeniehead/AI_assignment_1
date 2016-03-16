@@ -18,6 +18,10 @@ public class Graph {
         this.edges = new ArrayList<>();
     }
 
+    /**
+     * Geef een representatie van dit object als string
+     * @return
+     */
     @Override
     public String toString()
     {
@@ -36,17 +40,31 @@ public class Graph {
         return sb.toString();
     }
 
+    /**
+     * Voeg een vertex toe
+     * @param v
+     */
     public void addVertex(Vertex v)
     {
         this.vertices.add(v);
         connections.put(v, new ArrayList<>());
     }
 
+    /**
+     * Geef alle vertices
+     * @return
+     */
     public ArrayList<Vertex> getVertices()
     {
         return this.vertices;
     }
 
+    /**
+     * Verbind twee vertices met elkaar
+     * @param from De eerste vertex
+     * @param to De tweede vertex
+     * @param weight Het gewicht van deze verbinding
+     */
     public void connect(Vertex from, Vertex to, int weight)
     {
         Edge edge = new Edge(from, to , weight);
@@ -68,6 +86,11 @@ public class Graph {
         return this.connections.get(vertex);
     }
 
+    /**
+     * Maak de huidige graaf willekeurig
+     * @param vertices De hoeveelheid vertices
+     * @param density Met welke kans de knopen met elkaar moeten zijn verbonden
+     */
     public void makeRandom(int vertices, float density)
     {
         this.connections = new Hashtable<>();
@@ -98,6 +121,10 @@ public class Graph {
         }
     }
 
+    /**
+     * Geef een willekeurig gewicht
+     * @return
+     */
     private int randomWeight()
     {
         return dice.nextInt(1000000);
