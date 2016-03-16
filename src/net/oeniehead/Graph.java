@@ -129,4 +129,14 @@ public class Graph {
     {
         return dice.nextInt(1000000);
     }
+
+    /**
+     *
+     * @param min minimaal gewicht
+     * @param max maximaal gewicht
+     * @return geef een willekeurig gewicht binnen een bepaald interval
+     */
+    private int randomWeightInterval(int min, int max){
+        return dice.nextInt((max - min) +1) + min;
+    }
 }
