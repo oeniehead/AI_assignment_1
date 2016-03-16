@@ -64,20 +64,20 @@ public class Prim {
 
             current.setDone(true);
 
-            System.out.println("Current: " + current.getLabel() + " " + current.getWeight());
+            //System.out.println("Current: " + current.getLabel() + " " + current.getWeight());
 
             for(Edge edge : this.subject.getConnection(current))
             {
                 Vertex other = edge.other(current);
 
-                System.out.println(" - connects: " + other.getLabel() + "  " + edge.getWeight());
+                //System.out.println(" - connects: " + other.getLabel() + "  " + edge.getWeight());
 
                 int newWeight = edge.getWeight();
 
-                System.out.println(" - weight: " + other.getWeight() + " new weight: " + newWeight);
+                //System.out.println(" - weight: " + other.getWeight() + " new weight: " + newWeight);
 
                 if(other.getWeight() > newWeight && !other.isDone()) {
-                    System.out.println(" - " + current.getLabel() + " is parent of " + other.getLabel() + " with weight " + newWeight);
+                    //System.out.println(" - " + current.getLabel() + " is parent of " + other.getLabel() + " with weight " + newWeight);
 
                     this.edgeHits++;
 
